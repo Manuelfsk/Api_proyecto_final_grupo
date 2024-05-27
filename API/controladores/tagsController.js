@@ -39,12 +39,14 @@ tagsController.create = function (request, response) {
         }
     })
 }
+
 // read == listar todos los elementos creados
 tagsController.read = function (request, response) {
     tagsModel.read(null, function (respuesta) {
         response.json({ respuesta })
     })
 }
+
 // readId == listar un solo elemento _id especifico
 tagsController.readId = function (request, response) {
     let post = {
@@ -58,6 +60,7 @@ tagsController.readId = function (request, response) {
         response.json({ respuesta })
     })
 }
+
 //update == modificar 
 tagsController.update = function (request, response) {
     let post = {
@@ -84,6 +87,7 @@ tagsController.update = function (request, response) {
         }
     })
 }
+
 //delete == eliminar
 tagsController.delete = function (request, response) {
     let post = {
