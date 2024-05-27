@@ -1,6 +1,8 @@
 let tagsModel = require("../../API/modelos/tagsModel.js").tagsModel
 let tagsController = {}
 
+//CRUD
+//create == crear
 tagsController.create = function (request, response) {
 
     let post = {
@@ -37,14 +39,26 @@ tagsController.create = function (request, response) {
         }
     })
 }
-
+// read == listar todos los elementos creados
 tagsController.read = function (request, response) {
     tagsModel.read(null, function (respuesta) {
         response.json({ respuesta })
     })
 }
-
-
+// readId == listar un solo elemento _id especifico
+tagsController.readId = function (request, response) {
+    let post = {
+        _id: request.body._id
+    }
+    if (post._id == undefined || post._id == null || post._id == "") {
+        response.json({ state: false, mensaje: "el campo _id es obligatorio ", campo: "_id" })
+        return false
+    }
+    tagsModel.readId(post, function (respuesta) {
+        response.json({ respuesta })
+    })
+}
+//update == modificar 
 tagsController.update = function (request, response) {
     let post = {
         _id: request.body._id,
@@ -70,7 +84,25 @@ tagsController.update = function (request, response) {
         }
     })
 }
+//delete == eliminar
+tagsController.delete = function (request, response) {
+    let post = {
+        _id: request.body._id
+    }
 
+    if (post._id == undefined || post._id == null || post._id == "") {
+        response.json({ state: false, mensaje: "el campo _id es obligatorio ", campo: "_id" })
+        return false
+    }
+    tagsModel.delete(post, function (respuesta) {
+        if (respuesta.state == true) {
+            response.json({ state: true, mensaje: "Se elimino correctamente el elemeneto" })
+        } else {
+            response.json({ state: false, mensaje: "Se presento un problema al eliminar el elemento", error: respuesta })
+        }
+    })
+
+}
 
 
 
