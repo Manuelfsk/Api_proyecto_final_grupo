@@ -1,7 +1,8 @@
+//CRUD tags
 let tagsModel = require("../../API/modelos/tagsModel.js").tagsModel
 let tagsController = {}
 
-//CRUD
+
 //create == crear
 tagsController.create = function (request, response) {
 

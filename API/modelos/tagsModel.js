@@ -1,3 +1,4 @@
+//CRUD tags
 let tagsModel = {}
 const mongoose = require("mongoose")
 
@@ -12,7 +13,7 @@ const myModel = mongoose.model("tags", tagsSchema)
 
 
 
-//CRUD
+
 tagsModel.buscarCodigo = function (post, callback) {
     myModel.find({ codigo: post.codigo }, { codigo: 1, nombre: 1 }).then((respuesta) => {
         if (respuesta.length == 0) {
