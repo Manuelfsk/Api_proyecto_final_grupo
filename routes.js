@@ -46,3 +46,8 @@ app.put("/usuarios/update", function (request, response) {
 app.delete("/usuarios/delete", function (request, response) {
     usuariosController.delete(request, response)
 })
+
+//crear LOGIN
+app.post("/usuarios/login", function (request, response) {
+    usuariosController.login(request, response)
+})
