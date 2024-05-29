@@ -12,11 +12,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(() => console.lo
     return callback({ posicion: 0, state: false, mensaje: error })
 })
 
-
-
 global.tags = []
-
-
 
 app.listen(config.puerto, function () {
     console.log("El servidor esta funcionando por el puerto " + config.puerto)
@@ -24,3 +20,10 @@ app.listen(config.puerto, function () {
 
 
 require("./routes.js")
+
+//despues de crear usuarios/login.
+// preparar Blackend para recibir el frontend a un proyecto
+app.use('/', express.static(__dirname + '/pagina'))
+
+// crear la carpeta 'pagina' y el archivo index.html, copiar plantilla de bootstrap y en el body un componente forms
+

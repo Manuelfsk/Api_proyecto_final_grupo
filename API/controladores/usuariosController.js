@@ -135,7 +135,7 @@ usuariosController.login = function (request, response) {
             if (respuesta.data.length == 0) {
                 response.json({ state: false, mensaje: "error en las credenciales de acceso" })
             } else {
-                response.json({ state: true, mensaje: "Bienvenido" + respuesta.date[0].nombre })
+                response.json({ state: true, mensaje: "Bienvenido " + respuesta.data[0].nombre })
             }
         } else {
             response.json({ state: false, mensaje: "error en las credenciales de acceso" })
