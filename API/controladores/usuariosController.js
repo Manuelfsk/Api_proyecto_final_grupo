@@ -114,6 +114,34 @@ usuariosController.delete = function (request, response) {
 
 }
 
+//crear login
+usuariosController.login = function (request, response) {
+    let post = {
+        email: request.body.email,
+        password: request.body.password
+    }
+    // credenciales de validacion if(){}.
+    if (post.email == undefined || post.email == null || post.email == "") {
+        response.json({ state: false, mensaje: "el campo email es obligatorio ", campo: "email" })
+        return false
+    }
+    if (post.password == undefined || post.password == null || post.password == "") {
+        response.json({ state: false, mensaje: "el campo password es obligatorio ", campo: "password" })
+        return false
+    }
+    usuariosModel.login(post, function (respuesta) {
+        console.log(respuesta)
+        if (respuesta.state == true) {
+            if (respuesta.data.length == 0) {
+                response.json({ state: false, mensaje: "error en las credenciales de acceso" })
+            } else {
+                response.json({ state: true, mensaje: "Bienvenido" + respuesta.date[0].nombre })
+            }
+        } else {
+            response.json({ state: false, mensaje: "error en las credenciales de acceso" })
+        }
+    })
+}
 
 
 module.exports.usuariosController = usuariosController

@@ -49,7 +49,7 @@ usuariosModel.crear = function (post, callback) {
 
 // read == listar todos los elementos creados
 usuariosModel.read = function (post, callback) {
-    myModel.find({}, {password:0}).then((respuesta) => {
+    myModel.find({}, { password: 0 }).then((respuesta) => {
         return callback({ state: true, data: respuesta })
     }).catch((error) => {
         console.log(error)
@@ -59,7 +59,7 @@ usuariosModel.read = function (post, callback) {
 
 // readId == listar un solo elemento _id especifico
 usuariosModel.readId = function (post, callback) {
-    myModel.find({_id:post._id}, {password:0}).then((respuesta) => {
+    myModel.find({ _id: post._id }, { password: 0 }).then((respuesta) => {
         return callback({ state: true, data: respuesta })
     }).catch((error) => {
         console.log(error)
@@ -83,6 +83,16 @@ usuariosModel.delete = function (post, callback) {
     myModel.deleteOne({ _id: post._id }).then((respuesta) => {
         console.log(respuesta)
         return callback({ state: true })
+    }).catch((error) => {
+        console.log(error)
+        return callback({ state: false, mensaje: error })
+    })
+}
+
+//CREAR LOGIN
+usuariosModel.login = function (post, callback) {
+    myModel.find({ email: post.email, password: post.password }, { nombre: 1 }).then((respuesta) => {
+        return callback({ state: true, data: respuesta })
     }).catch((error) => {
         console.log(error)
         return callback({ state: false, mensaje: error })
