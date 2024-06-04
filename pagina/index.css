@@ -1,7 +1,13 @@
 .registrar {
-    margin: 20px 121px 10px 86px;
+    width: 375px;
     background-color: #529f85;
-    padding: 10px 60px 10px 60px;
+    padding: 34px;
     border-radius: 25px;
     border: solid 2px;
+}
+#mismensajes{
+    position: absolute;
+    right: 0px;
+    width: 375px;
+
 }

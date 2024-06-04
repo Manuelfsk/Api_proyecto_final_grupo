@@ -1,3 +1,4 @@
+
 let login = function () {
     let email = document.getElementById("email").value
     let password = document.getElementById("password").value
@@ -9,15 +10,24 @@ let login = function () {
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
-    xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-            console.log(this.responseText);
-        }
-    });
-
     xhr.open("POST", "http://localhost:3001/usuarios/login");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     xhr.send(data);
-
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            var resultado = JSON.parse(this.responseText);
+            console.log(resultado)
+            var mismensajes = document.getElementById("mismensajes")
+            if (resultado.state == true) {
+                mismensajes.innerHTML += `<div  class = "alert alert-success" role = "alert"> 
+                                        ${resultado.mensaje}    
+                                        </div>`
+            } else {
+                mismensajes.innerHTML += `<div  class = "alert alert-danger" role = "alert"> 
+                                        ${resultado.mensaje}    
+                                        </div>`
+            }
+        }
+    });
 }
