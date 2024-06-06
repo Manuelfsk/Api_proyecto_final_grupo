@@ -51,3 +51,28 @@ app.delete("/usuarios/delete", function (request, response) {
 app.post("/usuarios/login", function (request, response) {
     usuariosController.login(request, response)
 })
+
+//crear productos
+//crud productos 
+let productosController = require("./API/controladores/productosController.js").productosController
+
+//create == crear elemento
+app.post("/productos/create", function (request, response) {
+    productosController.create(request, response)
+})
+// read == listar todos los elementos
+app.post("/productos/read", function (request, response) {
+    productosController.read(request, response)
+})
+// readId == lista un solo elemento por ID
+app.post("/productos/readId", function (request, response) {
+    productosController.readId(request, response)
+})
+// update == modificar elementos 
+app.put("/productos/update", function (request, response) {
+    productosController.update(request, response)
+})
+// delete  == eliminar elementos
+app.post("/productos/delete", function (request, response) {
+    productosController.delete(request, response)
+})

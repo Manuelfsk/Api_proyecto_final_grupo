@@ -6,11 +6,27 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 const mongoose = require("mongoose")
-mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(() => console.log("conected!")
+
+mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(
+    () => console.log("conected!")
 ).catch((error) => {
     console.log(error)
     return callback({ posicion: 0, state: false, mensaje: error })
 })
+
+var cors = require("cors")
+
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (origin) return callback(null, true)
+
+        if (config.origin.indexOf(origin) === -1) {
+            return callback('error de cors', false)
+        }
+        return callback(null, true)
+    }
+}))
 
 global.tags = []
 
@@ -20,6 +36,7 @@ app.listen(config.puerto, function () {
 
 
 require("./routes.js")
+
 
 //despues de crear usuarios/login.
 // preparar Blackend para recibir el frontend a un proyecto
