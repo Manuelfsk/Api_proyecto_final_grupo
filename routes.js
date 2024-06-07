@@ -75,4 +75,28 @@ app.put("/productos/update", function (request, response) {
 // delete  == eliminar elementos
 app.post("/productos/delete", function (request, response) {
     productosController.delete(request, response)
+}) 
+//crear categorias
+//crud categorias 
+let categoriasController = require("./API/controladores/categoriasController.js").categoriasController
+
+//create == crear elemento
+app.post("/categorias/create", function (request, response) {
+    categoriasController.create(request, response)
 })
+// read == listar todos los elementos
+app.post("/categorias/read", function (request, response) {
+    categoriasController.read(request, response)
+})
+// readId == lista un solo elemento por ID
+app.post("/categorias/readId", function (request, response) {
+    categoriasController.readId(request, response)
+})
+// update == modificar elementos 
+app.put("/categorias/update", function (request, response) {
+    categoriasController.update(request, response)
+})
+// delete  == eliminar elementos
+app.post("/categorias/delete", function (request, response) {
+    categoriasController.delete(request, response)
+}) 
