@@ -7,11 +7,16 @@ let productosController = {}
 productosController.create = function (request, response) {
 
     let post = {
+        cod_cat: require.body.cod_cat,
         cod_prod: request.body.cod_prod,
         nombre: request.body.nombre,
         estado: request.body.estado
     }
 
+    if (post.cod_cat == undefined || post.cod_cat == null || post.cod_cat == "") {
+        response.json({ state: false, mensaje: "el campo cod_cat es obligatorio ", campo: "cod_cat" })
+        return false
+    }
     if (post.cod_prod == undefined || post.cod_prod == null || post.cod_prod == "") {
         response.json({ state: false, mensaje: "el campo cod_prod es obligatorio ", campo: "cod_prod" })
         return false

@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 let productosSchema = new Schema({
+    cod_cat: String,
     cod_prod: String,
     nombre: String,
     estado: Number
@@ -16,7 +17,7 @@ const myModel = mongoose.model("productos", productosSchema)
 
 
 productosModel.buscarCodigo = function (post, callback) {
-    myModel.find({ cod_prod: post.cod_prod }, { cod_prod: 1, nombre: 1, estado:1}).then((respuesta) => {
+    myModel.find({ cod_prod: post.cod_prod }, { cod_prod: 1, nombre: 1, estado:1, cod_cat:1}).then((respuesta) => {
         if (respuesta.length == 0) {
             return callback({ posicion: -1 })
 
@@ -35,6 +36,7 @@ productosModel.buscarCodigo = function (post, callback) {
 //create == crear
 productosModel.crear = function (post, callback) {
     const instancia = new myModel
+    instancia.cod_cat = post.cod_cat
     instancia.cod_prod = post.cod_prod
     instancia.nombre = post.nombre
     instancia.estado = post.estado
@@ -75,7 +77,7 @@ productosModel.readId = function (post, callback) {
 
 //update == modificar
 productosModel.update = function (post, callback) {
-    myModel.updateOne({ _id: post._id }, { nombre: post.nombre, estado: post.estado}).then((respuesta) => {
+    myModel.updateOne({ _id: post._id }, { nombre: post.nombre, estado: post.estado, cod_cat: post.cod_cat}).then((respuesta) => {
         console.log(respuesta)
         return callback({ state: true })
     }).catch((error) => {
