@@ -7,7 +7,7 @@ let productosController = {}
 productosController.create = function (request, response) {
 
     let post = {
-        cod_cat: require.body.cod_cat,
+        cod_cat: request.body.cod_cat,
         cod_prod: request.body.cod_prod,
         nombre: request.body.nombre,
         estado: request.body.estado
@@ -128,14 +128,14 @@ productosController.update = function (request, response) {
     }
 
     //solo true o false
-    if (post.estado.toLocaleLowerCase() == "true") {
-        post.estado = true
+    // if (post.estado.toLocaleLowerCase() == "true") {
+    //     post.estado = true
 
-    }
-    if (post.estado.toString().toLocaleLowerCase() == "false") {
-        post.estado = false
+    // }
+    // if (post.estado.toString().toLocaleLowerCase() == "false") {
+    //     post.estado = false
 
-    }
+    // }
 
     productosModel.update(post, function (respuesta) {
         if (respuesta.state == true) {
