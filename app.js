@@ -41,6 +41,7 @@ require("./routes.js")
 //despues de crear usuarios/login.
 // preparar Blackend para recibir el frontend a un proyecto
 app.use('/', express.static(__dirname + '/pagina'))
+app.use('/imagenes', express.static(__dirname + '/imagenes'))
 
 // crear la carpeta 'pagina' y el archivo index.html, copiar plantilla de bootstrap y en el body un componente forms
 
