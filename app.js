@@ -16,11 +16,9 @@ mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(
 
 var cors = require("cors")
 
-
 app.use(cors({
     origin: function (origin, callback) {
         if (origin) return callback(null, true)
-
         if (config.origin.indexOf(origin) === -1) {
             return callback('error de cors', false)
         }
@@ -30,18 +28,16 @@ app.use(cors({
 
 global.tags = []
 
-app.listen(config.puerto, function () {
-    console.log("El servidor esta funcionando por el puerto " + config.puerto)
-})
-
-
 require("./routes.js")
 
-
+app.use('/imagenes', express.static(__dirname + '/imagenes'))
 //despues de crear usuarios/login.
 // preparar Blackend para recibir el frontend a un proyecto
 app.use('/', express.static(__dirname + '/pagina'))
-app.use('/imagenes', express.static(__dirname + '/imagenes'))
+//exponer imagene en el frontend
 
+app.listen(config.puerto, function () {
+    console.log("El servidor esta funcionando por el puerto " + config.puerto)
+})
 // crear la carpeta 'pagina' y el archivo index.html, copiar plantilla de bootstrap y en el body un componente forms
 

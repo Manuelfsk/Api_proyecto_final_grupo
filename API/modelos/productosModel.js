@@ -4,11 +4,11 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 let productosSchema = new Schema({
-    // cod_cat: String,
+    cod_cat: String,
     cod_prod: String,
     nombre: String,
-    // imagen:String,
-    // precio:Number,
+    imagen:String,
+    precio:Number,
     estado: Number
 })
 
@@ -19,8 +19,6 @@ const myModel = mongoose.model("productos", productosSchema)
 
 
 productosModel.buscarCodigo = function (post, callback) {
-    //ocultar cod_cat
-    // myModel.find({ cod_prod: post.cod_prod }, { cod_prod: 1, nombre: 1, estado:1, cod_cat:1}).then((respuesta) => {
     myModel.find({ cod_prod: post.cod_prod }, { cod_prod: 1, nombre: 1, estado:1, cod_cat:1}).then((respuesta) => {
         if (respuesta.length == 0) {
             return callback({ posicion: -1 })
@@ -33,6 +31,7 @@ productosModel.buscarCodigo = function (post, callback) {
         console.log(error)
         return callback({ posicion: 0, state: false, mensaje: error })
     })
+    //codigo del ejercicio que no aplica en node, "ingnorar"
     // let posicion = productos.findIndex((item) => item.cod_prod == post.cod_prod)
     // return callback({ posicion: posicion })
 }
@@ -40,15 +39,15 @@ productosModel.buscarCodigo = function (post, callback) {
 //create == crear
 productosModel.crear = function (post, callback) {
     const instancia = new myModel
-    //instancia.cod_cat = post.cod_cat
+    instancia.cod_cat = post.cod_cat
     instancia.cod_prod = post.cod_prod
     instancia.nombre = post.nombre
-    // if(post.imagen == ""){
-    //     instancia.imagen = "http://localhost:3001/imagenes/default.png"
-    // }else{
-    //     instancia.imagen=post.imagen
-    // }
-    // instancia.precio = post.precio
+    if(post.imagen == ""){
+        instancia.imagen = "http://localhost:3001/imagenes/default.png"
+    }else{
+        instancia.imagen=post.imagen
+    }
+    instancia.precio = post.precio
     instancia.estado = post.estado
 
     instancia.save().then((respuesta) => {
@@ -90,9 +89,9 @@ productosModel.update = function (post, callback) {
     myModel.updateOne({ _id: post._id }, { 
         nombre: post.nombre, 
         estado: post.estado, 
-        //cod_cat: post.cod_cat, 
-        //imagen:post.imagen, 
-        //precio:post.precio
+        cod_cat: post.cod_cat, 
+        imagen:post.imagen, 
+        precio:post.precio
     }).then((respuesta) => {
         console.log(respuesta)
         return callback({ state: true })

@@ -7,20 +7,20 @@ let productosController = {}
 productosController.create = function (request, response) {
 
     let post = {
-        // cod_cat: request.body.cod_cat,
+        cod_cat: request.body.cod_cat,
         cod_prod: request.body.cod_prod,
         nombre: request.body.nombre,
-        // imagen: request.body.imagen,
-        // precio: request.body.precio,
+        imagen: request.body.imagen,
+        precio: request.body.precio,
         estado: request.body.estado,
     }
 //validacion cod_cat
-    // if (post.cod_cat == undefined || post.cod_cat == null || post.cod_cat == "") {
-    //     response.json({ state: false, mensaje: "el campo cod_cat es obligatorio ", campo: "cod_cat" })
-    //     return false
-    // }
+    if (post.cod_cat == undefined || post.cod_cat == null || post.cod_cat == "") {
+        response.json({ state: false, mensaje: "el campo cod_cat es obligatorio ", campo: "cod_cat" })
+        return false
+    }
     if (post.cod_prod == undefined || post.cod_prod == null || post.cod_prod == "") {
-        response.json({ state: false, mensaje: "el campo cod_prod es obligatorio ", campo: "cod_prod" })
+        response.json({ state: false, mensaje: "el campo cod_prod putos es obligatorio ", campo: "cod_prod" })
         return false
     }
     if (post.cod_prod.length >= 16) {
@@ -40,15 +40,15 @@ productosController.create = function (request, response) {
     }
 
     //imagen
-    // if (post.imagen == undefined || post.imagen == null || post.imagen == "") {
-    //     response.json({ state: false, mensaje: "el campo imagen es obligatorio ", campo: "imagen" })
-    //     return false
-    // }
+    if (post.imagen == undefined || post.imagen == null || post.imagen == "") {
+        response.json({ state: false, mensaje: "el campo imagen es obligatorio ", campo: "imagen" })
+        return false
+    }
     //precio
-    // if (post.precio == undefined || post.precio == null || post.precio == "") {
-    //     response.json({ state: false, mensaje: "el campo precio es obligatorio ", campo: "precio" })
-    //     return false
-    // }
+    if (post.precio == undefined || post.precio == null || post.precio == "") {
+        response.json({ state: false, mensaje: "el campo precio es obligatorio ", campo: "precio" })
+        return false
+    }
     //estadp
     if (post.estado == undefined || post.estado == null || post.estado == "") {
         response.json({ state: false, mensaje: "el campo estado es obligatorio ", campo: "estado" })
@@ -115,24 +115,24 @@ productosController.readId = function (request, response) {
 productosController.update = function (request, response) {
     let post = {
         _id: request.body._id,
-        // cod_cat:request.body.cod_cat,
+        cod_cat:request.body.cod_cat,
         cod_prod: request.body.cod_prod,
         nombre: request.body.nombre,
-        // imagen: request.body.imagen,
-        // precio: request.body.precio,
+        imagen: request.body.imagen,
+        precio: request.body.precio,
         estado: request.body.estado
     }
 //validacion cod_cat
-    // if (post.cod_cat == undefined || post.cod_cat == null || post.cod_cat == "") {
-    //     response.json({ state: false, mensaje: "el campo ccodigo categoria es obligatorio ", campo: "cod_cat" })
-    //     return false
-    // }
-
+    if (post.cod_cat == undefined || post.cod_cat == null || post.cod_cat == "") {
+        response.json({ state: false, mensaje: "el campo ccodigo categoria es obligatorio ", campo: "cod_cat" })
+        return false
+    }
+//_id
     if (post._id == undefined || post._id == null || post._id == "") {
         response.json({ state: false, mensaje: "el campo ID es obligatorio ", campo: "_id" })
         return false
     }
-
+//nombre
     if (post.nombre == undefined || post.nombre == null || post.nombre == "") {
         response.json({ state: false, mensaje: "el campo nombre es obligatorio ", campo: "nombre" })
         return false
@@ -145,15 +145,15 @@ productosController.update = function (request, response) {
         response.json({ state: false, mensaje: "El nombre es de minimo 4 caracteres" })
     }
      //imagen
-    // if (post.imagen == undefined || post.imagen == null || post.imagen == "") {
-    //     response.json({ state: false, mensaje: "el campo imagen es obligatorio ", campo: "imagen" })
-    //     return false
-    // }
+    if (post.imagen == undefined || post.imagen == null || post.imagen == "") {
+        response.json({ state: false, mensaje: "el campo imagen es obligatorio ", campo: "imagen" })
+        return false
+    }
     //precio
-    // if (post.precio == undefined || post.precio == null || post.precio == "") {
-    //     response.json({ state: false, mensaje: "el campo precio es obligatorio ", campo: "precio" })
-    //     return false
-    // }
+    if (post.precio == undefined || post.precio == null || post.precio == "") {
+        response.json({ state: false, mensaje: "el campo precio es obligatorio ", campo: "precio" })
+        return false
+    }
     if (post.estado == undefined || post.estado == null || post.estado == "") {
         response.json({ state: false, mensaje: "el campo estado es obligatorio ", campo: "estado" })
         return false
