@@ -4,7 +4,7 @@ global.config = require("./config.js").config
 let bodyParser = require("body-parser")
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-
+global.tags = []
 const mongoose = require("mongoose")
 
 mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(
@@ -26,7 +26,7 @@ app.use(cors({
     }
 }))
 
-global.tags = []
+
 
 require("./routes.js")
 
