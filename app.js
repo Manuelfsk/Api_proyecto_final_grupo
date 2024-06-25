@@ -33,7 +33,6 @@ var cors = require("cors")
 
 app.use(cors({
     origin: function (origin, callback) {
-        console.log(origin)
         if (!origin) return callback(null, true)
         if (config.origin.indexOf(origin) === -1) {
             return callback('error de cors', false)
