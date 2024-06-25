@@ -6,7 +6,8 @@ const Schema = mongoose.Schema
 let usuariosSchema = new Schema({
     email: String,
     password: String,
-    nombre: String
+    nombre: String,
+    codigoact: String
 })
 
 const myModel = mongoose.model("usuarios", usuariosSchema)
@@ -34,6 +35,8 @@ usuariosModel.crear = function (post, callback) {
     instancia.email = post.email
     instancia.password = post.password
     instancia.nombre = post.nombre
+    instancia.estado = 0
+    instancia.codigoact = post.azar
 
     instancia.save().then((respuesta) => {
         return callback({ state: true })
@@ -91,14 +94,22 @@ usuariosModel.delete = function (post, callback) {
 
 //CREAR LOGIN
 usuariosModel.login = function (post, callback) {
-    myModel.find({ email: post.email, password: post.password }, { nombre: 1 }).then((respuesta) => {
+    myModel.find({ email: post.email, password: post.password }, { nombre: 1, estado:1}).then((respuesta) => {
         return callback({ state: true, data: respuesta })
     }).catch((error) => {
         console.log(error)
         return callback({ state: false, mensaje: error })
     })
 }
-
+usuariosModel.activar = function (post, callback) {
+    myModel.updateOne({ email: post.email, codigoact: post.codigoact }, { estado: 1 }).then((respuesta) => {
+        console.log(respuesta)
+        return callback({ state: true, respuesta: respuesta })
+    }).catch((error) => {
+        console.log(error)
+        return callback({ posicion: 0, state: false, mensaje: error })
+    })
+}
 
 
 
