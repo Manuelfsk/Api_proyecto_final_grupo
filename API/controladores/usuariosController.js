@@ -10,6 +10,7 @@ usuariosController.create = function (request, response) {
         email: request.body.email,
         password: request.body.password,
         nombre: request.body.nombre,
+        estado:request.body.estado
     }
 
     if (post.email == undefined || post.email == null || post.email == "") {
@@ -28,6 +29,8 @@ usuariosController.create = function (request, response) {
 
     usuariosModel.buscarCodigo(post, function (respuesta) {
         if (respuesta.posicion == -1) {
+            let azar = "ALTS-" + Math.floor(Math.random()*(9999-1000)+1000);
+            post.azar = azar
             usuariosModel.crear(post, function (respuesta) {
                 if (respuesta.state == true) {
                     console.log(respuesta.posicion)
@@ -130,15 +133,46 @@ usuariosController.login = function (request, response) {
         return false
     }
     usuariosModel.login(post, function (respuesta) {
-        console.log(respuesta)
+        console.log(respuesta.data.length)
         if (respuesta.state == true) {
             if (respuesta.data.length == 0) {
                 response.json({ state: false, mensaje: "error en las credenciales de acceso" })
             } else {
+                if(respuesta.data[0].estado == 0){
+                response.json({ state: false, mensaje: "Su cuenta no ha sido activada, verifica tu correo electronico."  })
+                }else{
                 response.json({ state: true, mensaje: "Bienvenido " + respuesta.data[0].nombre })
+                }
             }
         } else {
             response.json({ state: false, mensaje: "error en las credenciales de acceso" })
+        }
+    })
+}
+//activar usuarios
+usuariosController.activar = function (request, response) {
+    let post = {
+        email: request.body.email,
+        codigoact: request.body.codigoact,
+        
+    }
+
+    if (post.email == undefined || post.email == null || post.email == "") {
+        response.json({ state: false, mensaje: "el campo email es obligatorio ", campo: "email" })
+        return false
+    }
+
+    if (post.codigoact == undefined || post.codigoact == null || post.codigoact == "") {
+        response.json({ state: false, mensaje: "el campo codigoact es obligatorio ", campo: "codigoact" })
+        return false
+    }
+// verificacion del codigoact 
+    usuariosModel.activar(post, function (respuesta) {
+        
+        if (respuesta.respuesta.modifiedCount == 0) {
+            response.json({ state: false, mensaje: "Sus credenciales de activación son invalidas" })
+        } else {
+            response.json({ state: true, mensaje: "Su cuenta se activó correctamente" })
         }
     })
 }
