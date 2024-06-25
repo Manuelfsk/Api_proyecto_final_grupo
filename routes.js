@@ -51,6 +51,12 @@ app.delete("/usuarios/delete", function (request, response) {
 app.post("/usuarios/login", function (request, response) {
     usuariosController.login(request, response)
 })
+// activar usuarios
+app.post("/usuarios/activar", function (request, response) {
+    usuariosController.uactivar(request, response)
+})
+
+
 
 //crear productos
 //crud productos 
