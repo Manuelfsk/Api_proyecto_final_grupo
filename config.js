@@ -7,4 +7,23 @@ config.origin = [
 ]
 config.passgmail = "eahk byxl knyr vylf"
 config.usergmail = "validaciondecorreose@gmail.com"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports.config = config
