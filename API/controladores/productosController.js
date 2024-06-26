@@ -48,7 +48,20 @@ productosController.create = function (request, response) {
     if (post.precio == undefined || post.precio == null || post.precio == "") {
         response.json({ state: false, mensaje: "el campo precio es obligatorio ", campo: "precio" })
         return false
+   
     }
+
+    // pendiente crear api con el mensaje valores numericos
+    // if (post.precio == undefined || post.precio == null || post.precio == "") {
+    //     response.json({ state: false, mensaje: "el campo solo acepta valores numericos ", campo: "precio" })
+    //     return false
+    if(isNaN(post.precio)){
+        response.json({"state": false,
+        mensaje: "Ingrese solo valores numericos",
+        "campo": "post.precio"})
+        return false
+    }
+
     //estadp
     if (post.estado == undefined || post.estado == null || post.estado == "") {
         response.json({ state: false, mensaje: "el campo estado es obligatorio ", campo: "estado" })
