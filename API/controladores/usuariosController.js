@@ -1,3 +1,5 @@
+const { config } = require("../../config.js")
+
 //CRUD usuarios
 let usuariosModel = require("../../API/modelos/usuariosModel.js").usuariosModel
 let usuariosController = {}
@@ -29,8 +31,50 @@ usuariosController.create = function (request, response) {
 
     usuariosModel.buscarCodigo(post, function (respuesta) {
         if (respuesta.posicion == -1) {
+            //crear codigo de confirmacion para enviar por email
             let azar = "ALTS-" + Math.floor(Math.random()*(9999-1000)+1000);
             post.azar = azar
+            //crear constante nodemailer para envio de correos electronicos
+            const nodemailer = require("nodemailer")
+            // crear el transportador para enviar correo de verificacion
+            let transporter = nodemailer.createTransport({
+                host:'smtp.gmail.com',
+                port:587,
+                secure:false,
+                requireTLS:true,
+                auth:{
+                    user: config.usergmail,
+                    pass: config.passgmail,
+                }
+            })
+
+            //configurar las opciones del correo electronico
+            let mailOptions = {
+                from:config.usergmail,
+                to: post.email,
+                subject:"Confirmación de correo electronico " + post.azar,
+                html:`<div style="background-color: #ffffff; max-width: 600px; margin: 0 auto; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                            <h2 style="color: #333333;">Código de activación</h2>
+                            <p>Hola ${post.nombre},</p>
+                            <p>Gracias por registrarte en nuestro servicio. Para completar el proceso de registro, necesitamos que ingreses el siguiente código de activación:</p>
+                            <p style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; font-size: 1.2em; margin: 20px 0;"><strong>Código de activación: ${post.azar}</strong></p>
+                            <p>Haz clic en el siguiente enlace para ingresar el código y finalizar tu registro:</p>
+                            <p style="text-align: center;"><a href="http://localhost:4200/ativar/${post.email}/${post.azar}" style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px;">Completar registro</a></p>
+                            <p>Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.</p>
+                            <p>¡Gracias!</p>
+                            <p>Atentamente,<br>Equipo Altschmerz Ilustration</p>
+                        </div> `
+            }
+            transporter.sendMail(mailOptions,(error, info)=>{
+                if(error){
+                    return console.log(error)
+                }else{
+                    info
+                }
+            })
+
+
+
             usuariosModel.crear(post, function (respuesta) {
                 if (respuesta.state == true) {
                     console.log(respuesta.posicion)
