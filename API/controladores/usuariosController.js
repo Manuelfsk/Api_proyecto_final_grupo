@@ -12,7 +12,8 @@ usuariosController.create = function (request, response) {
         email: request.body.email,
         password: request.body.password,
         nombre: request.body.nombre,
-        estado:request.body.estado
+        estado:request.body.estado,
+        
     }
 
     if (post.email == undefined || post.email == null || post.email == "") {
@@ -28,6 +29,8 @@ usuariosController.create = function (request, response) {
         response.json({ state: false, mensaje: "el campo nombre es obligatorio ", campo: "nombre" })
         return false
     }
+    //encriptar password usuario
+    post.password = sha256(post.password + config.passha256)
 
     usuariosModel.buscarCodigo(post, function (respuesta) {
         if (respuesta.posicion == -1) {
@@ -119,7 +122,9 @@ usuariosController.update = function (request, response) {
     let post = {
         _id: request.body._id,
         codigo: request.body.codigo,
-        nombre: request.body.nombre
+        nombre: request.body.nombre,
+        rol: request.body.rol
+
     }
 
     if (post._id == undefined || post._id == null || post._id == "") {
@@ -129,6 +134,10 @@ usuariosController.update = function (request, response) {
 
     if (post.nombre == undefined || post.nombre == null || post.nombre == "") {
         response.json({ state: false, mensaje: "el campo nombre es obligatorio ", campo: "nombre" })
+        return false
+    }
+    if (post.rol == undefined || post.rol == null || post.rol == "") {
+        response.json({ state: false, mensaje: "el campo rol es obligatorio ", campo: "rol" })
         return false
     }
 
@@ -165,7 +174,8 @@ usuariosController.delete = function (request, response) {
 usuariosController.login = function (request, response) {
     let post = {
         email: request.body.email,
-        password: request.body.password
+        password: request.body.password,
+        rol:request.session.rol
     }
     // credenciales de validacion if(){}.
     if (post.email == undefined || post.email == null || post.email == "") {
@@ -176,6 +186,9 @@ usuariosController.login = function (request, response) {
         response.json({ state: false, mensaje: "el campo password es obligatorio ", campo: "password" })
         return false
     }
+
+        //desencriptar password usuario
+        post.password = sha256(post.password + config.passha256)
     usuariosModel.login(post, function (respuesta) {
         console.log(respuesta.data.length)
         if (respuesta.state == true) {
@@ -185,6 +198,9 @@ usuariosController.login = function (request, response) {
                 if(respuesta.data[0].estado == 0){
                 response.json({ state: false, mensaje: "Su cuenta no ha sido activada, verifica tu correo electronico."  })
                 }else{
+                    request.session.nombre = respuesta.data[0].nombre
+                    request.session.rol = respuesta.data[0].rol
+                    request.session._id = respuesta.data[0]._id
                 response.json({ state: true, mensaje: "Bienvenido " + respuesta.data[0].nombre })
                 }
             }
@@ -193,6 +209,7 @@ usuariosController.login = function (request, response) {
         }
     })
 }
+
 //activar usuarios
 usuariosController.activar = function (request, response) {
     let post = {
@@ -220,6 +237,15 @@ usuariosController.activar = function (request, response) {
         }
     })
 }
-
+// perfil == listar un solo elemento _id especifico
+usuariosController.perfil = function (request, response) {
+    let post = {
+        _id: request.session._id
+    }
+    
+    usuariosModel.readId(post, function (respuesta) {
+        response.json({ respuesta })
+    })
+}
 
 module.exports.usuariosController = usuariosController

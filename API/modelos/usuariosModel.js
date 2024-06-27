@@ -7,7 +7,9 @@ let usuariosSchema = new Schema({
     email: String,
     password: String,
     nombre: String,
-    codigoact: String
+    codigoact: String,
+    rol:Number,
+    estado:String
 })
 
 const myModel = mongoose.model("usuarios", usuariosSchema)
@@ -37,6 +39,7 @@ usuariosModel.crear = function (post, callback) {
     instancia.nombre = post.nombre
     instancia.estado = 0
     instancia.codigoact = post.azar
+    instancia.rol = 2 // administrador 1,  usuario 2
 
     instancia.save().then((respuesta) => {
         return callback({ state: true })
@@ -72,7 +75,7 @@ usuariosModel.readId = function (post, callback) {
 
 //update == modificar
 usuariosModel.update = function (post, callback) {
-    myModel.updateOne({ _id: post._id }, { nombre: post.nombre }).then((respuesta) => {
+    myModel.updateOne({ _id: post._id }, { nombre: post.nombre ,rol: post.rol}).then((respuesta) => {
         console.log(respuesta)
         return callback({ state: true })
     }).catch((error) => {
@@ -94,13 +97,14 @@ usuariosModel.delete = function (post, callback) {
 
 //CREAR LOGIN
 usuariosModel.login = function (post, callback) {
-    myModel.find({ email: post.email, password: post.password }, { nombre: 1, estado:1}).then((respuesta) => {
+    myModel.find({ email: post.email, password: post.password }, { rol:1, nombre: 1, estado:1}).then((respuesta) => {
         return callback({ state: true, data: respuesta })
     }).catch((error) => {
         console.log(error)
         return callback({ state: false, mensaje: error })
     })
 }
+//activar usuarios
 usuariosModel.activar = function (post, callback) {
     myModel.updateOne({ email: post.email, codigoact: post.codigoact }, { estado: 1 }).then((respuesta) => {
         console.log(respuesta)
@@ -110,6 +114,7 @@ usuariosModel.activar = function (post, callback) {
         return callback({ posicion: 0, state: false, mensaje: error })
     })
 }
+
 
 
 

@@ -7,9 +7,10 @@ config.origin = [
 ]
 config.passgmail = "eahk byxl knyr vylf"
 config.usergmail = "validaciondecorreose@gmail.com"
-
-
-
+config.palabraclave = "zxcvasdfqwer1234MNBVÑLKJPOIU=)(/"
+config.maxAge = 6000*10
+config.nombrecookie = "Altschmerz_Ilustration"
+config.passha256 = "AñSlDkFjGh1029384756!#$%&/()="
 
 
 

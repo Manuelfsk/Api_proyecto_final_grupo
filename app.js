@@ -1,11 +1,11 @@
 const express = require("express")
 global.app = express()
 global.config = require("./config.js").config
+global.sha256 = require("sha256")
 let bodyParser = require("body-parser")
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 global.tags = []
-const mongoose = require("mongoose")
 
 app.all('*', function (req, res, next) {
 
@@ -21,6 +21,7 @@ app.all('*', function (req, res, next) {
     next();
 
 });
+const mongoose = require("mongoose")
 
 mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(
     () => console.log("conected!")
@@ -30,6 +31,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(
 })
 
 var cors = require("cors")
+
+
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -42,7 +45,15 @@ app.use(cors({
 }))
 
 
-
+let session = require("express-session")({
+    secret: config.palabraclave,
+    resave: true,
+    saveUninitialized:true,
+    cookie:{path:"/", httpOnly:true, maxAge:config.maxAge , secure: false},
+    name:config.nombrecookie,
+    rolling:true
+})
+app.use(session)
 require("./routes.js")
 
 app.use('/imagenes', express.static(__dirname + '/imagenes'))
