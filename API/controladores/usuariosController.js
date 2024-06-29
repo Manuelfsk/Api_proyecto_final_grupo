@@ -15,8 +15,8 @@ usuariosController.create = function (request, response) {
         password: request.body.password,
         telefono: request.body.telefono,
         estado:request.body.estado,
-        
     }
+    
     if (post.nombre == undefined || post.nombre == null || post.nombre == "") {
         response.json({ state: false, mensaje: "el campo nombre es obligatorio ", campo: "nombre" })
         return false
