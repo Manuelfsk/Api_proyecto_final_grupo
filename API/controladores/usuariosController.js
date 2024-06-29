@@ -12,7 +12,6 @@ usuariosController.create = function (request, response) {
         nombre: request.body.nombre,
         apellidos: request.body.apellidos,
         email: request.body.email,
-        apellidos:request.body.apellidos,
         password: request.body.password,
         telefono: request.body.telefono,
         estado:request.body.estado,
