@@ -12,13 +12,46 @@ usuariosController.create = function (request, response) {
         nombre: request.body.nombre,
         apellidos: request.body.apellidos,
         email: request.body.email,
+        apellidos:request.body.apellidos,
         password: request.body.password,
         telefono: request.body.telefono,
         estado:request.body.estado,
+<<<<<<< HEAD
+=======
+        telefono:request.body.telefono,
+        rol:request.body.rol
+        
+>>>>>>> 808be413115e93e993632cba26f269620872d73b
     }
     
     if (post.nombre == undefined || post.nombre == null || post.nombre == "") {
         response.json({ state: false, mensaje: "el campo nombre es obligatorio ", campo: "nombre" })
+<<<<<<< HEAD
+        return false
+    }
+    if (post.apellidos == undefined || post.apellidos == null || post.apellidos == "") {
+        response.json({ state: false, mensaje: "el campo apellidos es obligatorio ", campo: "apellidos" })
+        return false
+    }
+
+    if (post.email == undefined || post.email == null || post.email == "") {
+        response.json({ state: false, mensaje: "el campo email es obligatorio ", campo: "email" })
+        return false
+    }
+
+    if (post.password == undefined || post.password == null || post.password == "") {
+        response.json({ state: false, mensaje: "el campo password es obligatorio ", campo: "password" })
+        return false
+    }
+    if (post.telefono == undefined || post.telefono == null || post.telefono == "") {
+        response.json({ state: false, mensaje: "el campo telefono es obligatorio ", campo: "telefono" })
+        return false
+    }
+
+  
+
+
+=======
         return false
     }
     if (post.apellidos == undefined || post.apellidos == null || post.apellidos == "") {
@@ -41,6 +74,7 @@ usuariosController.create = function (request, response) {
     }
 
     
+>>>>>>> 7c86c6b96a2c6200ec7641c0455cd7af098b3ea6
     //encriptar password usuario
     post.password = sha256(post.password + config.passha256)
 
