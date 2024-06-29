@@ -9,10 +9,12 @@ let usuariosController = {}
 usuariosController.create = function (request, response) {
 
     let post = {
+        nombre: request.body.nombre,
+        apellidos: request.body.apellidos,
         email: request.body.email,
         apellidos:request.body.apellidos,
         password: request.body.password,
-        nombre: request.body.nombre,
+        telefono: request.body.telefono,
         estado:request.body.estado,
         telefono:request.body.telefono,
         rol:request.body.rol
@@ -20,6 +22,7 @@ usuariosController.create = function (request, response) {
     }
     if (post.nombre == undefined || post.nombre == null || post.nombre == "") {
         response.json({ state: false, mensaje: "el campo nombre es obligatorio ", campo: "nombre" })
+<<<<<<< HEAD
         return false
     }
     if (post.apellidos == undefined || post.apellidos == null || post.apellidos == "") {
@@ -44,6 +47,30 @@ usuariosController.create = function (request, response) {
   
 
 
+=======
+        return false
+    }
+    if (post.apellidos == undefined || post.apellidos == null || post.apellidos == "") {
+        response.json({ state: false, mensaje: "el campo apellidos es obligatorio ", campo: "apellidos" })
+        return false
+    }
+    if (post.email == undefined || post.email == null || post.email == "") {
+        response.json({ state: false, mensaje: "el campo email es obligatorio ", campo: "email" })
+        return false
+    }
+    
+    if (post.password == undefined || post.password == null || post.password == "") {
+        response.json({ state: false, mensaje: "el campo contraseña es obligatorio ", campo: "password" })
+        return false
+    }
+    
+    if (post.telefono == undefined || post.telefono == null || post.telefono == "") {
+        response.json({ state: false, mensaje: "el campo telefono es obligatorio ", campo: "telefono" })
+        return false
+    }
+
+    
+>>>>>>> 7c86c6b96a2c6200ec7641c0455cd7af098b3ea6
     //encriptar password usuario
     post.password = sha256(post.password + config.passha256)
 
@@ -77,7 +104,7 @@ usuariosController.create = function (request, response) {
                             <p>Gracias por registrarte en nuestro servicio. Para completar el proceso de registro, necesitamos que ingreses el siguiente código de activación:</p>
                             <p style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; font-size: 1.2em; margin: 20px 0;"><strong>Código de activación: ${post.azar}</strong></p>
                             <p>Haz clic en el siguiente enlace para ingresar el código y finalizar tu registro:</p>
-                            <p style="text-align: center;"><a href="http://localhost:4200/ativar/${post.email}/${post.azar}" style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px;">Completar registro</a></p>
+                            <p style="text-align: center;"><a href="http://localhost:4200/activar/${post.email}/${post.azar}" style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px;">Completar registro</a></p>
                             <p>Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.</p>
                             <p>¡Gracias!</p>
                             <p>Atentamente,<br>Equipo Altschmerz Ilustration</p>
@@ -138,8 +165,8 @@ usuariosController.update = function (request, response) {
         _id: request.body._id,
         codigo: request.body.codigo,
         nombre: request.body.nombre,
-        rol: request.body.rol
-
+        rol: request.body.rol,
+        apellidos:  request.body.apellidos
     }
 
     if (post._id == undefined || post._id == null || post._id == "") {

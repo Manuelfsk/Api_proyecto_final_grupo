@@ -1,4 +1,5 @@
 const express = require("express")
+const mongoStore = require("connect-mongo")
 global.app = express()
 global.config = require("./config.js").config
 global.sha256 = require("sha256")
@@ -34,6 +35,7 @@ var cors = require("cors")
 
 
 
+
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin) return callback(null, true)
@@ -51,7 +53,8 @@ let session = require("express-session")({
     saveUninitialized:true,
     cookie:{path:"/", httpOnly:true, maxAge:config.maxAge , secure: false},
     name:config.nombrecookie,
-    rolling:true
+    rolling:true,
+    store: mongoStore.create({mongoUrl:"mongodb://localhost/" + config.bd + "cookies"})
 })
 app.use(session)
 require("./routes.js")

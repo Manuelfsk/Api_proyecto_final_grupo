@@ -55,19 +55,19 @@ app.post("/usuarios/create",  function (request, response) {
     usuariosController.create(request, response)
 })
 // read == listar todos los elementos
-app.get("/usuarios/read", function (request, response) {
+app.post("/usuarios/read", function (request, response) {
     usuariosController.read(request, response)
 })
 // readId == lista un solo elemento por ID
-app.get("/usuarios/readId", SoloAdministradores, function (request, response) {
+app.post("/usuarios/readId", SoloAdministradores, function (request, response) {
     usuariosController.readId(request, response)
 })
 // update == modificar elementos 
-app.put("/usuarios/update", SoloAdministradores, function (request, response) {
+app.post("/usuarios/update", SoloAdministradores, function (request, response) {
     usuariosController.update(request, response)
 })
 // delete  == eliminar elementos
-app.delete("/usuarios/delete",  SoloAdministradores, function (request, response) {
+app.post("/usuarios/delete",  SoloAdministradores, function (request, response) {
     usuariosController.delete(request, response)
 })
 

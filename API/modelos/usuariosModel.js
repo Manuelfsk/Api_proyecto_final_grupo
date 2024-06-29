@@ -4,12 +4,14 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 let usuariosSchema = new Schema({
+    apellidos:String,
     email: String,
     password: String,
     nombre: String,
     codigoact: String,
     rol:Number,
-    estado:String
+    estado:String,
+    telefono:Number,
 })
 
 const myModel = mongoose.model("usuarios", usuariosSchema)
@@ -37,9 +39,13 @@ usuariosModel.crear = function (post, callback) {
     instancia.email = post.email
     instancia.password = post.password
     instancia.nombre = post.nombre
+    instancia.apellidos = post.apellidos
     instancia.estado = 0
     instancia.codigoact = post.azar
     instancia.rol = 2 // administrador 1,  usuario 2
+    instancia.telefono = post.telefono
+
+
 
     instancia.save().then((respuesta) => {
         return callback({ state: true })
@@ -75,7 +81,7 @@ usuariosModel.readId = function (post, callback) {
 
 //update == modificar
 usuariosModel.update = function (post, callback) {
-    myModel.updateOne({ _id: post._id }, { nombre: post.nombre ,rol: post.rol}).then((respuesta) => {
+    myModel.updateOne({ _id: post._id }, { nombre: post.nombre, apellidos: post.apellidos, rol: post.rol}).then((respuesta) => {
         console.log(respuesta)
         return callback({ state: true })
     }).catch((error) => {
