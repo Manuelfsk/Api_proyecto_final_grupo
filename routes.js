@@ -51,7 +51,7 @@ app.delete("/tags/delete", function (request, response) {
 let usuariosController = require("./API/controladores/usuariosController.js").usuariosController
 
 //create == crear elemento
-app.post("/usuarios/create", SoloAdministradores, function (request, response) {
+app.post("/usuarios/create",  function (request, response) {
     usuariosController.create(request, response)
 })
 // read == listar todos los elementos

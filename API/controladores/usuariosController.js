@@ -10,25 +10,40 @@ usuariosController.create = function (request, response) {
 
     let post = {
         email: request.body.email,
+        apellidos:request.body.apellidos,
         password: request.body.password,
         nombre: request.body.nombre,
         estado:request.body.estado,
+        telefono:request.body.telefono,
+        rol:request.body.rol
         
+    }
+    if (post.nombre == undefined || post.nombre == null || post.nombre == "") {
+        response.json({ state: false, mensaje: "el campo nombre es obligatorio ", campo: "nombre" })
+        return false
+    }
+    if (post.apellidos == undefined || post.apellidos == null || post.apellidos == "") {
+        response.json({ state: false, mensaje: "el campo apellidos es obligatorio ", campo: "apellidos" })
+        return false
     }
 
     if (post.email == undefined || post.email == null || post.email == "") {
         response.json({ state: false, mensaje: "el campo email es obligatorio ", campo: "email" })
         return false
     }
+
     if (post.password == undefined || post.password == null || post.password == "") {
         response.json({ state: false, mensaje: "el campo password es obligatorio ", campo: "password" })
         return false
     }
-
-    if (post.nombre == undefined || post.nombre == null || post.nombre == "") {
-        response.json({ state: false, mensaje: "el campo nombre es obligatorio ", campo: "nombre" })
+    if (post.telefono == undefined || post.telefono == null || post.telefono == "") {
+        response.json({ state: false, mensaje: "el campo telefono es obligatorio ", campo: "telefono" })
         return false
     }
+
+  
+
+
     //encriptar password usuario
     post.password = sha256(post.password + config.passha256)
 
