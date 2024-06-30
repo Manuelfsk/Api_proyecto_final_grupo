@@ -28,7 +28,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(
     () => console.log("conected!")
 ).catch((error) => {
     console.log(error)
-    return callback({ posicion: 0, state: false, mensaje: error })
+    // return callback({ posicion: 0, state: false, mensaje: error })
 })
 
 var cors = require("cors")
