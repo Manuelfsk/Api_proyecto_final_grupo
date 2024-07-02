@@ -4,14 +4,14 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 let usuariosSchema = new Schema({
-    apellidos:String,
+    apellidos: String,
     email: String,
     password: String,
     nombre: String,
     codigoact: String,
-    rol:Number,
-    estado:String,
-    telefono:Number,
+    rol: Number,
+    estado: String,
+    telefono: Number,
 })
 
 const myModel = mongoose.model("usuarios", usuariosSchema)
@@ -81,7 +81,7 @@ usuariosModel.readId = function (post, callback) {
 
 //update == modificar
 usuariosModel.update = function (post, callback) {
-    myModel.updateOne({ _id: post._id }, { nombre: post.nombre, apellidos: post.apellidos, rol: post.rol}).then((respuesta) => {
+    myModel.updateOne({ _id: post._id }, { nombre: post.nombre, apellidos: post.apellidos, rol: post.rol }).then((respuesta) => {
         console.log(respuesta)
         return callback({ state: true })
     }).catch((error) => {
@@ -103,7 +103,7 @@ usuariosModel.delete = function (post, callback) {
 
 //CREAR LOGIN
 usuariosModel.login = function (post, callback) {
-    myModel.find({ email: post.email, password: post.password }, { rol:1, nombre: 1, estado:1}).then((respuesta) => {
+    myModel.find({ email: post.email, password: post.password }, { rol: 1, nombre: 1, estado: 1 }).then((respuesta) => {
         return callback({ state: true, data: respuesta })
     }).catch((error) => {
         console.log(error)
@@ -120,6 +120,38 @@ usuariosModel.activar = function (post, callback) {
         return callback({ posicion: 0, state: false, mensaje: error })
     })
 }
+
+//actualizar password
+usuariosModel.actualizarpass = function (post, callback) {
+    myModel.updateOne({ _id: post._id }, { password: post.password }).then((respuesta) => {
+        console.log(respuesta)
+        return callback({ state: true })
+    }).catch((error) => {
+        console.log(error)
+        return callback({ posicion: 0, state: false, mensaje: error })
+    })
+}
+//actualizar datos usuarios
+usuariosModel.actualizarDatos = function (post, callback) {
+    myModel.updateOne({ _id: post._id }, { telefono: post.telefono}).then((respuesta) => {
+        console.log(post._id)
+        return callback({ state: true })
+    }).catch((error) => {
+        console.log(error)
+        return callback({ posicion: 0, state: false, mensaje: error })
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

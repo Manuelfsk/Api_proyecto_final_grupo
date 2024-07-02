@@ -1,5 +1,3 @@
-const { config } = require("../../config.js")
-
 //CRUD usuarios
 let usuariosModel = require("../../API/modelos/usuariosModel.js").usuariosModel
 let usuariosController = {}
@@ -261,5 +259,72 @@ usuariosController.perfil = function (request, response) {
         response.json({ respuesta })
     })
 }
+//uactualizar password 
+usuariosController.actualizarpass = function (request, response) {
+    let post = {
+        _id: request.session._id,
+        password: request.body.password,
+        confirmarpass: request.body.confirmarpass
+    
+    }
+
+    
+    if (post.password == undefined || post.password == null || post.password == "") {
+        response.json({ state: false, mensaje: "el campo password es obligatorio ", campo: "password" })
+        return false
+    }
+    // if (post.confirmarpass == undefined || post.confirmarpass == null || post.confirmarpass == "") {
+    //     response.json({ state: false, mensaje: "el campo confirmarpass es obligatorio ", campo: "confirmarpass" })
+    //     return false
+    // }
+  
+    post.password = sha256(post.password + config.passha256)
+
+    usuariosModel.actualizarpass(post, function (respuesta) {
+        if (respuesta.state == true) {
+            response.json({ state: true, mensaje: "Se actualizo el elemento correctamente" })
+        } else {
+            response.json({ state: false, mensaje: "Se presentó un problema al actualizar el elemento", error: respuesta })
+        }
+    })
+}
+//actualizar datos usuarios
+usuariosController.actualizarDatos = function (request, response) {
+    let post = {
+        _id: request.session._id,
+        codigo: request.body.codigo,
+        nombre: request.body.nombre,
+        rol: request.body.rol,
+        apellidos:  request.body.apellidos,
+        telefono: request.body.telefono
+        
+    }
+    
+   
+    if (post.telefono == undefined || post.telefono == null || post.telefono == "") {
+        response.json({ state: false, mensaje: "el campo telefono es obligatorio ", campo: "telefono" })
+        return false
+    } 
+    // if (post.telefono.length >= 11) {
+    //     response.json({ state: false, mensaje: "El numero de telefono es de maximo 10 caracteres." })
+    // }
+    
+    usuariosModel.actualizarDatos(post, function (respuesta) {
+        console.log(respuesta)
+        if (respuesta.state == true) {
+            response.json({ state: true, mensaje: "Se actualizo el elemento correctamente" })
+        } else {
+            response.json({ state: false, mensaje: "Se presentó un problema al actualizar el elemento", error: respuesta })
+        }
+    })
+}
+
+
+
+
+
+
+
+
 
 module.exports.usuariosController = usuariosController

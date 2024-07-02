@@ -92,6 +92,16 @@ app.post("/usuarios/logout",SoloLogeados, function (request, response) {
 app.post("/usuarios/perfil",SoloLogeados,  function (request, response) {
     usuariosController.perfil(request, response)
 })
+// ruta actualizar pass
+app.post("/usuarios/actualizarpass",SoloLogeados,  function (request, response) {
+    usuariosController.actualizarpass(request, response)
+})
+// update == modificar elementos 
+app.post("/usuarios/actualizarDatos", SoloLogeados, function (request, response) {
+    usuariosController.actualizarDatos(request, response)
+})
+
+
 
 
 //crear productos
