@@ -1,18 +1,20 @@
+
+
 // control de acceso solo para administradores 
-let SoloAdministradores = function(request, response, next){
+let SoloAdministradores = function (request, response, next) {
     let rol = request.session.rol
-    if(rol == 1){
+    if (rol == 1) {
         next()
-    }else{
-        response.json({permisos: true, state:false, mensaje:"Esta API es solo para ADMINISTRADORES"})
+    } else {
+        response.json({ permisos: true, state: false, mensaje: "Esta API es solo para ADMINISTRADORES" })
     }
 }
 // solo usuarios logeados 
-let SoloLogeados = function(request, response, next){
-    if(request.session._id != undefined){
+let SoloLogeados = function (request, response, next) {
+    if (request.session._id != undefined) {
         next()
-    }else{
-        response.json({permisos: true, state:false, mensaje:"Debe iniciar session "})
+    } else {
+        response.json({ permisos: true, state: false, mensaje: "Debe iniciar session " })
     }
 }
 
@@ -51,7 +53,7 @@ app.delete("/tags/delete", function (request, response) {
 let usuariosController = require("./API/controladores/usuariosController.js").usuariosController
 
 //create == crear elemento
-app.post("/usuarios/create",  function (request, response) {
+app.post("/usuarios/create", function (request, response) {
     usuariosController.create(request, response)
 })
 // read == listar todos los elementos
@@ -67,7 +69,7 @@ app.post("/usuarios/update", SoloAdministradores, function (request, response) {
     usuariosController.update(request, response)
 })
 // delete  == eliminar elementos
-app.post("/usuarios/delete",  SoloAdministradores, function (request, response) {
+app.post("/usuarios/delete", SoloAdministradores, function (request, response) {
     usuariosController.delete(request, response)
 })
 
@@ -80,25 +82,112 @@ app.post("/usuarios/activar", function (request, response) {
     usuariosController.activar(request, response)
 })
 // activar roles y nombre de usuario
-app.post("/usuarios/state", function (request, response){
+app.post("/usuarios/state", function (request, response) {
     response.json(request.session)
 })
 //cerrar session 
-app.post("/usuarios/logout",SoloLogeados, function (request, response) {
+app.post("/usuarios/logout", SoloLogeados, function (request, response) {
     request.session.destroy()
-    response.json({state:true, mensaje:"session Cerrada"})
+    response.json({ state: true, mensaje: "session Cerrada" })
 })
 // perfil == lista un solo elemento por ID
-app.post("/usuarios/perfil",SoloLogeados,  function (request, response) {
+app.post("/usuarios/perfil", SoloLogeados, function (request, response) {
     usuariosController.perfil(request, response)
 })
 // ruta actualizar pass
-app.post("/usuarios/actualizarpass",SoloLogeados,  function (request, response) {
+app.post("/usuarios/actualizarpass", SoloLogeados, function (request, response) {
     usuariosController.actualizarpass(request, response)
 })
 // update == modificar elementos 
 app.post("/usuarios/actualizarDatos", SoloLogeados, function (request, response) {
     usuariosController.actualizarDatos(request, response)
+})
+
+
+
+let multer = require('multer')
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, "ImagenesAvatar/")
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + path.extname(file.originalname))
+//         console.log(diskStorage)
+//     }
+// })
+// const Upload = multer({ storage: storage })
+// app.post("/Upload", Upload.single('image') function (request, response){
+//     try {
+//         response.json({ state: true, mensaje: "Archivo subido correctament" })
+//     } catch(error){
+//         response.json({ state: false, error: error })
+//     }
+// })
+
+
+
+
+
+
+
+
+// const Upload = multer({ storage: storage })
+// cargar imagenes Avatar
+app.post("/Upload:_id", function (request, response) {
+    
+    
+    let post = {
+        _id: request.parans._id
+    }
+
+    console.log(_id)
+
+
+    if (post._id == undefined || post._id == null || post._id == "") {
+        response.json({ state: false, mensaje: "el campo_id es obligatorio" })
+        return false
+    }
+    try {
+        let CargarImagen = multer({
+            storage: multer.diskStorage({
+                destination: (req, file, cb) => {
+                    cb(null, "ImagenesAvatar/")
+                },
+                filename: (req, file, cb) => {
+                    cb(null, post._id + '.png')
+                }
+            }), 
+            fileFilter: function (req, file, cb) {
+                let ext = path.extname(file.originalname)
+                let misextensiones = ['.png', '.jpeg', '.jpg', '.gif', '.tif']
+                if (misextensiones.indexOf(ext) == -1) {
+                    return cb({ state: false, mensaje: "solo soportamos las siguintes imagenes " + misextensiones.join("|") }, null)
+                }
+                cb(null, true)
+            }
+        }).single('image')
+
+
+
+        CargarImagen(request, response, function(err){
+            if(err){
+                response.json({ state: false, error:err })
+            }else{
+                response.json({ state: true, mensaje: "Archivo subido correctament" })
+            }
+    })
+        
+    } catch (error) {
+        response.json({ state: false, error: error })
+        // console.log(error)
+    }
+
+
+
+
+
+
+    // usuariosController.CargarImagen(request, response)
 })
 
 
@@ -109,7 +198,7 @@ app.post("/usuarios/actualizarDatos", SoloLogeados, function (request, response)
 let productosController = require("./API/controladores/productosController.js").productosController
 
 //create == crear elemento
-app.post("/productos/create",SoloLogeados, SoloAdministradores, function (request, response) {
+app.post("/productos/create", SoloLogeados, SoloAdministradores, function (request, response) {
     productosController.create(request, response)
 })
 // read == listar todos los elementos
@@ -121,23 +210,23 @@ app.post("/productos/readId", SoloAdministradores, function (request, response) 
     productosController.readId(request, response)
 })
 // update == modificar elementos 
-app.put("/productos/update", SoloAdministradores, function (request, response) {
+app.post("/productos/update", SoloAdministradores, function (request, response) {
     productosController.update(request, response)
 })
 // delete  == eliminar elementos
 app.post("/productos/delete", SoloAdministradores, function (request, response) {
     productosController.delete(request, response)
-}) 
+})
 //crear categorias
 //crud categorias 
 let categoriasController = require("./API/controladores/categoriasController.js").categoriasController
 
 //create == crear elemento
-app.post("/categorias/create",SoloLogeados, SoloAdministradores, function (request, response) {
+app.post("/categorias/create", SoloLogeados, SoloAdministradores, function (request, response) {
     categoriasController.create(request, response)
 })
 // read == listar todos los elementos
-app.post("/categorias/read",  function (request, response) {
+app.post("/categorias/read", function (request, response) {
     categoriasController.read(request, response)
 })
 // readId == lista un solo elemento por ID

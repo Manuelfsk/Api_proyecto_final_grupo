@@ -3,6 +3,9 @@ const mongoStore = require("connect-mongo")
 global.app = express()
 global.config = require("./config.js").config
 global.sha256 = require("sha256")
+
+global.path = require("path")
+
 let bodyParser = require("body-parser")
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -60,6 +63,7 @@ app.use(session)
 require("./routes.js")
 
 app.use('/imagenes', express.static(__dirname + '/imagenes'))
+app.use('/ImagenesAvatar', express.static(__dirname + '/ImagenesAvatar'))
 //despues de crear usuarios/login.
 // preparar Blackend para recibir el frontend a un proyecto
 app.use('/', express.static(__dirname + '/pagina'))
