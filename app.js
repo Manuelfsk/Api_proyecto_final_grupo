@@ -3,8 +3,10 @@ const mongoStore = require("connect-mongo")
 global.app = express()
 global.config = require("./config.js").config
 global.sha256 = require("sha256")
-
+global.multer = require('multer')
 global.path = require("path")
+global.raiz = __dirname
+
 
 let bodyParser = require("body-parser")
 app.use(bodyParser.json())

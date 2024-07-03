@@ -104,93 +104,12 @@ app.post("/usuarios/actualizarDatos", SoloLogeados, function (request, response)
 })
 
 
-
-let multer = require('multer')
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, "ImagenesAvatar/")
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, Date.now() + path.extname(file.originalname))
-//         console.log(diskStorage)
-//     }
-// })
-// const Upload = multer({ storage: storage })
-// app.post("/Upload", Upload.single('image') function (request, response){
-//     try {
-//         response.json({ state: true, mensaje: "Archivo subido correctament" })
-//     } catch(error){
-//         response.json({ state: false, error: error })
-//     }
-// })
-
-
-
-
-
-
-
-
-// const Upload = multer({ storage: storage })
+// cargar avatar para usuarios
+let Anexos = require("./API/controladores/AvatarController.js").AvatarController
 // cargar imagenes Avatar
-app.post("/Upload:_id", function (request, response) {
-    
-    
-    let post = {
-        _id: request.parans._id
-    }
-
-    console.log(_id)
-
-
-    if (post._id == undefined || post._id == null || post._id == "") {
-        response.json({ state: false, mensaje: "el campo_id es obligatorio" })
-        return false
-    }
-    try {
-        let CargarImagen = multer({
-            storage: multer.diskStorage({
-                destination: (req, file, cb) => {
-                    cb(null, "ImagenesAvatar/")
-                },
-                filename: (req, file, cb) => {
-                    cb(null, post._id + '.png')
-                }
-            }), 
-            fileFilter: function (req, file, cb) {
-                let ext = path.extname(file.originalname)
-                let misextensiones = ['.png', '.jpeg', '.jpg', '.gif', '.tif']
-                if (misextensiones.indexOf(ext) == -1) {
-                    return cb({ state: false, mensaje: "solo soportamos las siguintes imagenes " + misextensiones.join("|") }, null)
-                }
-                cb(null, true)
-            }
-        }).single('image')
-
-
-
-        CargarImagen(request, response, function(err){
-            if(err){
-                response.json({ state: false, error:err })
-            }else{
-                response.json({ state: true, mensaje: "Archivo subido correctament" })
-            }
-    })
-        
-    } catch (error) {
-        response.json({ state: false, error: error })
-        // console.log(error)
-    }
-
-
-
-
-
-
-    // usuariosController.CargarImagen(request, response)
+app.post("/CargarImagen", function (request, response) {
+        Anexos.Avatar(request,response)
 })
-
-
 
 
 //crear productos
