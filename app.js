@@ -29,7 +29,8 @@ app.all('*', function (req, res, next) {
 });
 const mongoose = require("mongoose")
 
-mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(
+// mongoose.connect("mongodb+srv://fonsecafernando88:app@cluster0.1prgpov.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(
+    mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then(
     () => console.log("conected!")
 ).catch((error) => {
     console.log(error)
@@ -56,10 +57,10 @@ let session = require("express-session")({
     secret: config.palabraclave,
     resave: true,
     saveUninitialized:true,
-    cookie:{path:"/", httpOnly:true, maxAge:config.maxAge , secure: false},
+    // cookie:{path:"/", httpOnly:true, maxAge:config.maxAge , secure: false},
     name:config.nombrecookie,
     rolling:true,
-    store: mongoStore.create({mongoUrl:"mongodb://localhost/" + config.bd + "cookies"})
+    store: mongoStore.create({mongoUrl:"mongodb://127.0.0.1:27017/" + config.bd + "cookies"})
 })
 app.use(session)
 require("./routes.js")
