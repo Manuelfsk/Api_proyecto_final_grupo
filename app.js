@@ -30,7 +30,7 @@ app.all('*', function (req, res, next) {
 const mongoose = require("mongoose")
 
 // mongoose.connect("mongodb+srv://fonsecafernando88:app@cluster0.1prgpov.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(
-    mongoose.connect("mongodb://mongo:27017/" + config.bd).then(
+    mongoose.connect("mongodb://172.21.0.2:27017/" + config.bd).then(
     () => console.log("conected!")
 ).catch((error) => {
     console.log(error)
@@ -60,7 +60,7 @@ let session = require("express-session")({
     // cookie:{path:"/", httpOnly:true, maxAge:config.maxAge , secure: false},
     name:config.nombrecookie,
     rolling:true,
-    store: mongoStore.create({mongoUrl:"mongodb://mongo:27017/" + config.bd + "cookies"})
+    store: mongoStore.create({mongoUrl:"mongodb://172.21.0.2:27017/" + config.bd + "cookies"})
 })
 app.use(session)
 require("./routes.js")
