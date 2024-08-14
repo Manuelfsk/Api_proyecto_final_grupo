@@ -60,7 +60,7 @@ let session = require("express-session")({
     // cookie:{path:"/", httpOnly:true, maxAge:config.maxAge , secure: false},
     name:config.nombrecookie,
     rolling:true,
-    store: mongoStore.create({mongoUrl:"172.21.0.3" + config.bd + "cookies"})
+    store: mongoStore.create({mongoUrl:"mongodb://172.21.0.3" + config.bd + "cookies"})
 })
 app.use(session)
 require("./routes.js")
