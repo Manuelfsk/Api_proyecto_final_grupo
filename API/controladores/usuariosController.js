@@ -74,7 +74,7 @@ usuariosController.create = function (request, response) {
                             <p>Gracias por registrarte en nuestro servicio. Para completar el proceso de registro, necesitamos que ingreses el siguiente código de activación:</p>
                             <p style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; font-size: 1.2em; margin: 20px 0;"><strong>Código de activación: ${post.azar}</strong></p>
                             <p>Haz clic en el siguiente enlace para ingresar el código y finalizar tu registro:</p>
-                            <p style="text-align: center;"><a href="http://localhost:4200/activar/${post.email}/${post.azar}" style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px;">Completar registro</a></p>
+                            <p style="text-align: center;"><a href="http://18.218.88.92:4200/activar/${post.email}/${post.azar}" style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px;">Completar registro</a></p>
                             <p>Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.</p>
                             <p>¡Gracias!</p>
                             <p>Atentamente,<br>Equipo Altschmerz Ilustration</p>
