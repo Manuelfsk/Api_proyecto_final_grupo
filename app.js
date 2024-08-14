@@ -57,6 +57,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
 }));
+app.options('*', cors()); // Allow all preflight requests
 
 let session = require("express-session")({
     secret: config.palabraclave,
