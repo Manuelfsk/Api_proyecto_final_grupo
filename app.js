@@ -42,16 +42,21 @@ var cors = require("cors")
 
 
 
+// app.use(cors({
+//     origin: function (origin, callback) {
+//         if (!origin) return callback(null, true)
+//         if (config.origin.indexOf(origin) === -1) {
+//             return callback('error de cors', false)
+//         }
+//         return callback(null, true)
+//     }
+// }))
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true)
-        if (config.origin.indexOf(origin) === -1) {
-            return callback('error de cors', false)
-        }
-        return callback(null, true)
-    }
-}))
-
+    origin: 'http://18.218.88.92:4200', // Replace with your frontend's URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+}));
 
 let session = require("express-session")({
     secret: config.palabraclave,
