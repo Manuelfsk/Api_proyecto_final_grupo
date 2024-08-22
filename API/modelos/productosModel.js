@@ -43,7 +43,7 @@ productosModel.crear = function (post, callback) {
     instancia.cod_prod = post.cod_prod
     instancia.nombre = post.nombre
     if(post.imagen == ""){
-        instancia.imagen = "http://3.134.243.20:3000/imagenes/default.png"
+        instancia.imagen = "http://3.12.198.97:3000/imagenes/default.png"
     }else{
         instancia.imagen=post.imagen
     }

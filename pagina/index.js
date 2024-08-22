@@ -10,7 +10,7 @@ let login = function () {
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
-    xhr.open("POST", "http://3.134.243.20:3000/usuarios/login");
+    xhr.open("POST", "http://3.12.198.97:3000/usuarios/login");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     xhr.send(data);

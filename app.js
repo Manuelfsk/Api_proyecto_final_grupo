@@ -30,7 +30,7 @@ app.all('*', function (req, res, next) {
 const mongoose = require("mongoose")
 
 mongoose.connect("mongodb+srv://fonsecafernando88:app@cluster0.1prgpov.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" + config.bd).then(
-    // mongoose.connect("mongodb://3.134.243.20:27017/" + config.bd).then(
+    // mongoose.connect("mongodb://3.12.198.97:27017/" + config.bd).then(
     () => console.log("conected!")
 ).catch((error) => {
     console.log(error)
@@ -52,7 +52,7 @@ var cors = require("cors")
 //     }
 // }))
 app.use(cors({
-    origin: 'http://3.134.243.20:4200', // Replace with your frontend's URL
+    origin: 'http://3.12.198.97:4200', // Replace with your frontend's URL
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -67,7 +67,7 @@ let session = require("express-session")({
     name:config.nombrecookie,
     rolling:true,
     store: mongoStore.create({mongoUrl:"mongodb+srv://fonsecafernando88:app@cluster0.1prgpov.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" + config.bd + "cookies"})
-    // store: mongoStore.create({mongoUrl:"mongodb://3.134.243.20:27017/" + config.bd + "cookies"})
+    // store: mongoStore.create({mongoUrl:"mongodb://3.12.198.97:27017/" + config.bd + "cookies"})
 })
 app.use(session)
 require("./routes.js")
